@@ -5,6 +5,69 @@
         "rgName": {
             "type": "string",
             "defaultValue": "rgr-rgname"
+        },
+        "virtualNetworkName": {
+            "type": "string",
+            "defaultValue": "First_ARM_VNet",
+            "metadata": {
+                "description": "This is your Virtual Network"
+            }
+        },
+        "addressPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/16",
+            "metadata": {
+                "description": "The CIDR address space for your Virtual Network in Azure"
+            }
+        },
+        "FESubnetPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.0.0/24",
+            "metadata": {
+                "description": "This is CIDR prefix for the FrontEnd Subnet"
+            }
+        },
+        "AppSubnetPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.1.0/24",
+            "metadata": {
+                "description": "This is CIDR prefix for the Application Subnet"
+            }
+        },
+        "DBSubnetPrefix": {
+            "type": "string",
+            "defaultValue": "10.0.2.0/24",
+            "metadata": {
+                "description": "This is CIDR prefix for the Database Subnet"
+            }
+        },
+        "FENSGName": {
+            "type": "string",
+            "defaultValue": "FE_NSG",
+            "metadata": {
+                "description": "This is name of the networkSecurityGroup that will be assigned to FrontEnd Subnet"
+            }
+        },
+        "AppNSGName": {
+            "type": "string",
+            "defaultValue": "App_NSG",
+            "metadata": {
+                "description": "This is name of the networkSecurityGroup that will be assigned to Application Subnet"
+            }
+        },
+        "DBNSGName": {
+            "type": "string",
+            "defaultValue": "DB_NSG",
+            "metadata": {
+                "description": "This is name of the networkSecurityGroup that will be assigned to Database Subnet"
+            }
+        },
+        "location": {
+            "type": "string",
+            "defaultValue": "[resourceGroup().location]",
+            "metadata": {
+                "description": "Location for all resources."
+            }
         }
     },
     "variables": {},
@@ -20,6 +83,10 @@
             "name": "nestedTemplate1",
             "apiVersion": "2019-10-01",
             "type": "Microsoft.Resources/deployments",
+            "resourceGroup": "resourcegroupname-rgr-name",
+            "dependsOn": [
+                "[resourceId('Microsoft.Resources/resourceGroups/', parameters('rgName'))]"
+            ],
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
